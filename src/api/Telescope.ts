@@ -29,7 +29,8 @@ export interface TelescopeOptions
     clientIgnoreUrls?: string[]
     ignoreErrors?: ErrorConstructor[]
     isAuthorized?: (request: Request, response: Response, next: NextFunction) => void
-    getUser?: GetUserFunction
+    getUser?: GetUserFunction,
+    enableClient: boolean,
 }
 
 export default class Telescope
@@ -44,6 +45,7 @@ export default class Telescope
 
     public app: Express
     public batchId?: string
+    private static enableClient: boolean = true;
 
     constructor(app: Express)
     {
@@ -56,10 +58,12 @@ export default class Telescope
 
         const telescope = new Telescope(app)
 
-        app.use('/telescope', Telescope.isAuthorized)
+        if (Telescope.enableClient) {
+            app.use('/telescope', Telescope.isAuthorized)
 
-        telescope.setUpApi()
-        telescope.setUpStaticFiles()
+            telescope.setUpApi()
+            telescope.setUpStaticFiles()
+        }
 
         app.use((request, response, next) => {
             telescope.batchId = uuidv4()
@@ -83,6 +87,10 @@ export default class Telescope
     {
         if (options.enabledWatchers) {
             Telescope.enabledWatchers = options.enabledWatchers
+        }
+
+        if (options.enableClient) {
+            Telescope.enableClient = options.enableClient
         }
 
         if (options.isAuthorized) {

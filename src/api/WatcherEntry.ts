@@ -4,6 +4,7 @@ import {ErrorWatcherData} from "./watchers/ErrorWatcher.js"
 import {DumpWatcherData} from "./watchers/DumpWatcher.js"
 import {LogWatcherData} from "./watchers/LogWatcher.js"
 import {ClientRequestWatcherData} from "./watchers/ClientRequestWatcher.js"
+import {TypeORMWatcherData} from "./watchers/TypeORMWatcher";
 
 export enum WatcherEntryDataType
 {
@@ -11,6 +12,7 @@ export enum WatcherEntryDataType
     exceptions = "exception",
     dumps = "dump",
     logs = "log",
+    queries = "query",
     clientRequests = "client-request",
 }
 
@@ -20,6 +22,7 @@ export enum WatcherEntryCollectionType
     exception = "exceptions",
     dump = "dumps",
     log = "logs",
+    query = "queries",
     clientRequest = "client-requests",
 }
 
@@ -28,7 +31,8 @@ export type WatcherType =
     ErrorWatcherData |
     DumpWatcherData |
     ClientRequestWatcherData |
-    LogWatcherData
+    LogWatcherData |
+    TypeORMWatcherData
 
 export default abstract class WatcherEntry<T extends WatcherType>
 {
