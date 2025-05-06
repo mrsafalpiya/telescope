@@ -9,6 +9,8 @@ import DumpWatcher from "./watchers/DumpWatcher.js";
 import { existsSync } from "fs";
 import path from "path";
 import TypeORMWatcher from "./watchers/TypeORMWatcher";
+import EventEmitter from 'node:events';
+export const eventEmitter = new EventEmitter();
 export default class Telescope {
     constructor(app) {
         this.app = app;

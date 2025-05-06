@@ -3,6 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.eventEmitter = void 0;
 const express_1 = __importDefault(require("express"));
 const DB_js_1 = __importDefault(require("./DB.js"));
 const ClientRequestWatcher_js_1 = __importDefault(require("./watchers/ClientRequestWatcher.js"));
@@ -14,6 +15,8 @@ const DumpWatcher_js_1 = __importDefault(require("./watchers/DumpWatcher.js"));
 const fs_1 = require("fs");
 const path_1 = __importDefault(require("path"));
 const TypeORMWatcher_1 = __importDefault(require("./watchers/TypeORMWatcher"));
+const node_events_1 = __importDefault(require("node:events"));
+exports.eventEmitter = new node_events_1.default();
 class Telescope {
     constructor(app) {
         this.app = app;

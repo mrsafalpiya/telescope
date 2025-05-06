@@ -1,5 +1,6 @@
 import DB from "../DB.js";
 import WatcherEntry, { WatcherEntryCollectionType, WatcherEntryDataType } from "../WatcherEntry.js";
+import { eventEmitter } from "../Telescope.js";
 export var LogType;
 (function (LogType) {
     LogType["LOG"] = "log";
@@ -23,11 +24,10 @@ export default class TypeORMWatcher {
         this.data = { level, data };
     }
     static capture(telescope) {
-        // @ts-ignore
-        console['query'] = function (type, query, parameters, ...args) {
+        eventEmitter.on('query', (type, query, parameters, ...args) => {
             const watcher = new TypeORMWatcher({ query, parameters, args }, type, telescope.batchId);
             watcher.save();
-        };
+        });
     }
     save() {
         const entry = new TypeORMWatcherEntry(this.data, this.batchId);

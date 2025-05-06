@@ -1,18 +1,19 @@
 import { AbstractLogger } from "typeorm";
 import { LogType } from "../watchers/TypeORMWatcher";
+import { eventEmitter } from "../Telescope";
 export default class TypeORMLogger extends AbstractLogger {
     constructor() {
         super(...arguments);
-        this.logger = console;
+        this.eventEmitter = eventEmitter;
     }
     logQuery(query, parameters, queryRunner) {
-        this.logger.query(LogType.LOG, query, parameters);
+        this.eventEmitter.emit('query', LogType.LOG, query, parameters);
     }
     logQuerySlow(time, query, parameters, queryRunner) {
-        this.logger.query(LogType.QUERY_SLOW, query, parameters, time);
+        this.eventEmitter.emit('query', LogType.QUERY_SLOW, query, parameters, time);
     }
     logQueryError(error, query, parameters, queryRunner) {
-        this.logger.query(LogType.QUERY_ERROR, query, parameters, error);
+        this.eventEmitter.emit('query', LogType.QUERY_ERROR, query, parameters, error);
     }
     /**
      * Write log to specific output.

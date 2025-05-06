@@ -1,3 +1,4 @@
+/// <reference types="node" />
 import { Express, NextFunction, Request, Response } from 'express';
 import { Driver } from './DB.js';
 import ClientRequestWatcher from "./watchers/ClientRequestWatcher.js";
@@ -6,6 +7,7 @@ import RequestWatcher, { GetUserFunction } from "./watchers/RequestWatcher.js";
 import ErrorWatcher from "./watchers/ErrorWatcher.js";
 import DumpWatcher from "./watchers/DumpWatcher.js";
 import TypeORMWatcher from "./watchers/TypeORMWatcher";
+import EventEmitter from 'node:events';
 export type Watcher = typeof RequestWatcher | typeof ErrorWatcher | typeof ClientRequestWatcher | typeof DumpWatcher | typeof LogWatcher | typeof TypeORMWatcher;
 export interface TelescopeOptions {
     enabledWatchers?: Watcher[];
@@ -19,6 +21,7 @@ export interface TelescopeOptions {
     getUser?: GetUserFunction;
     enableClient?: boolean;
 }
+export declare const eventEmitter: EventEmitter<[never]>;
 export default class Telescope {
     private static enabledWatchers;
     app: Express;

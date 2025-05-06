@@ -29,6 +29,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.TypeORMWatcherEntry = exports.LogType = void 0;
 const DB_js_1 = __importDefault(require("../DB.js"));
 const WatcherEntry_js_1 = __importStar(require("../WatcherEntry.js"));
+const Telescope_js_1 = require("../Telescope.js");
 var LogType;
 (function (LogType) {
     LogType["LOG"] = "log";
@@ -53,11 +54,10 @@ class TypeORMWatcher {
         this.data = { level, data };
     }
     static capture(telescope) {
-        // @ts-ignore
-        console['query'] = function (type, query, parameters, ...args) {
+        Telescope_js_1.eventEmitter.on('query', (type, query, parameters, ...args) => {
             const watcher = new TypeORMWatcher({ query, parameters, args }, type, telescope.batchId);
             watcher.save();
-        };
+        });
     }
     save() {
         const entry = new TypeORMWatcherEntry(this.data, this.batchId);
