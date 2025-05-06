@@ -2,7 +2,7 @@ import DB from "../DB.js"
 import WatcherEntry, {WatcherEntryCollectionType, WatcherEntryDataType} from "../WatcherEntry.js"
 import Telescope, {eventEmitter} from "../Telescope.js"
 import {AdvancedConsoleLogger} from "typeorm";
-import { InspectOptions } from "util";
+import {InspectOptions} from "util";
 import {EventEmitter} from "typeorm/browser/platform/BrowserPlatformTools";
 
 export enum LogType {
@@ -22,41 +22,31 @@ export interface TypeORMWatcherData {
     data: undefined,
 }
 
-export class TypeORMWatcherEntry extends WatcherEntry<TypeORMWatcherData>
-{
-    constructor(data: TypeORMWatcherData, batchId?: string)
-    {
+export class TypeORMWatcherEntry extends WatcherEntry<TypeORMWatcherData> {
+    constructor(data: TypeORMWatcherData, batchId?: string) {
         super(WatcherEntryDataType.queries, data, batchId)
     }
 }
 
-export default class TypeORMWatcher
-{
+export default class TypeORMWatcher {
     public static entryType = WatcherEntryCollectionType.log
 
     private data: TypeORMWatcherData
     private batchId?: string
 
-    constructor(data: any, level: LogType, batchId?: string)
-    {
+    constructor(data: any, level: LogType, batchId?: string) {
         this.batchId = batchId
         this.data = {level, data};
-        console.log(this.data);
     }
 
-    public static  capture(telescope: Telescope)
-    {
-        console.log('capture called')
+    public static capture(telescope: Telescope) {
         eventEmitter.on('query', async (type: LogType, query: any, parameters: any[], ...args: any[]) => {
-            console.log('event caught')
             const watcher = new TypeORMWatcher({query, parameters, args}, type, telescope.batchId)
             await watcher.save()
         })
     }
 
-    public async save()
-    {
-        console.log('save called')
+    public async save() {
         const entry = new TypeORMWatcherEntry(this.data, this.batchId)
         await DB.logs().save(entry)
     }
