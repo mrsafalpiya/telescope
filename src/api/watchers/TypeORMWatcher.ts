@@ -1,8 +1,9 @@
 import DB from "../DB.js"
 import WatcherEntry, {WatcherEntryCollectionType, WatcherEntryDataType} from "../WatcherEntry.js"
-import Telescope from "../Telescope.js"
+import Telescope, {eventEmitter} from "../Telescope.js"
 import {AdvancedConsoleLogger} from "typeorm";
 import { InspectOptions } from "util";
+import {EventEmitter} from "typeorm/browser/platform/BrowserPlatformTools";
 
 export enum LogType {
     LOG = "log",
@@ -45,11 +46,10 @@ export default class TypeORMWatcher
 
     public static capture(telescope: Telescope)
     {
-        // @ts-ignore
-        console['query'] = function (type: LogType, query: string, parameters?: any[], ...args?: any[]) {
+        eventEmitter.on('query', (type: LogType, query: any, parameters: any[], ...args: any[]) => {
             const watcher = new TypeORMWatcher({query, parameters, args}, type, telescope.batchId)
             watcher.save()
-        }
+        })
     }
 
     public save()

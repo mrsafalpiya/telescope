@@ -12,6 +12,7 @@ import {fileURLToPath, resolve} from "url"
 import * as url from "url"
 import path from "path"
 import TypeORMWatcher from "./watchers/TypeORMWatcher";
+import EventEmitter from 'node:events';
 
 export type Watcher =
     typeof RequestWatcher |
@@ -34,6 +35,8 @@ export interface TelescopeOptions
     getUser?: GetUserFunction,
     enableClient?: boolean
 }
+
+export const eventEmitter = new EventEmitter();
 
 export default class Telescope
 {
