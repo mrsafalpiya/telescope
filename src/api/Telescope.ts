@@ -36,7 +36,9 @@ export interface TelescopeOptions
     enableClient?: boolean
 }
 
-export const eventEmitter = new EventEmitter();
+const telescopeEmitter = new EventEmitter();
+
+export const eventEmitter = telescopeEmitter;
 
 export default class Telescope
 {

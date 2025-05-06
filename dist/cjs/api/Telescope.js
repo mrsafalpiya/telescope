@@ -16,7 +16,8 @@ const fs_1 = require("fs");
 const path_1 = __importDefault(require("path"));
 const TypeORMWatcher_1 = __importDefault(require("./watchers/TypeORMWatcher"));
 const node_events_1 = __importDefault(require("node:events"));
-exports.eventEmitter = new node_events_1.default();
+const telescopeEmitter = new node_events_1.default();
+exports.eventEmitter = telescopeEmitter;
 class Telescope {
     constructor(app) {
         this.app = app;

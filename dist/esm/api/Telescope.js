@@ -10,7 +10,8 @@ import { existsSync } from "fs";
 import path from "path";
 import TypeORMWatcher from "./watchers/TypeORMWatcher";
 import EventEmitter from 'node:events';
-export const eventEmitter = new EventEmitter();
+const telescopeEmitter = new EventEmitter();
+export const eventEmitter = telescopeEmitter;
 export default class Telescope {
     constructor(app) {
         this.app = app;

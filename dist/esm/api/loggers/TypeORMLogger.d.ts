@@ -1,6 +1,7 @@
 import { AbstractLogger, LogLevel, LogMessage, QueryRunner } from "typeorm";
 export default class TypeORMLogger extends AbstractLogger {
     private eventEmitter;
+    constructor();
     logQuery(query: string, parameters?: any[], queryRunner?: any): void;
     logQuerySlow(time: number, query: string, parameters?: any[], queryRunner?: any): void;
     logQueryError(error: string, query: string, parameters?: any[], queryRunner?: QueryRunner): void;

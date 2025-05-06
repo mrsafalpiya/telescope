@@ -40,13 +40,15 @@ export default class TypeORMWatcher
     constructor(data: any, level: LogType, batchId?: string)
     {
         this.batchId = batchId
-
         this.data = {level, data};
+        console.log(this.data);
     }
 
     public static capture(telescope: Telescope)
     {
+        console.log('capture called')
         eventEmitter.on('query', (type: LogType, query: any, parameters: any[], ...args: any[]) => {
+            console.log('event caught')
             const watcher = new TypeORMWatcher({query, parameters, args}, type, telescope.batchId)
             watcher.save()
         })
@@ -54,8 +56,8 @@ export default class TypeORMWatcher
 
     public save()
     {
+        console.log('save called')
         const entry = new TypeORMWatcherEntry(this.data, this.batchId)
-
         DB.logs().save(entry)
     }
 }
