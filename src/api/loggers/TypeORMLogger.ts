@@ -10,23 +10,19 @@ export default class TypeORMLogger extends AbstractLogger {
     private eventEmitter: EventEmitter;
 
     constructor(options: LoggerOptions | undefined = true) {
-        console.log('TypeORMLogger');
         super(options);
         this.eventEmitter = eventEmitter
     }
 
     public logQuery(query: string, parameters?: any[], queryRunner?: any): void {
-        console.log('log query');
         this.eventEmitter.emit('query', LogType.LOG, query, parameters);
     }
 
     public logQuerySlow(time: number, query: string, parameters?: any[], queryRunner?: any): void {
-        console.log('log slow query');
         this.eventEmitter.emit('query', LogType.QUERY_SLOW, query, parameters, time);
     }
 
     public logQueryError(error: string, query: string, parameters?: any[], queryRunner?: QueryRunner) {
-        console.log('log query error');
         this.eventEmitter.emit('query', LogType.QUERY_ERROR, query, parameters, error);
     }
 
@@ -34,7 +30,6 @@ export default class TypeORMLogger extends AbstractLogger {
      * Write log to specific output.
      */
     public writeLog(level: LogLevel, message: LogMessage | string | number | (LogMessage | string | number)[], queryRunner?: QueryRunner) {
-        console.log('write log');
-        // Do nothing
+        // Do nothing since they are saving to the database
     }
 }
