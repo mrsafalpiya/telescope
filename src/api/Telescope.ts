@@ -11,13 +11,15 @@ import {existsSync} from "fs"
 import {fileURLToPath, resolve} from "url"
 import * as url from "url"
 import path from "path"
+import TypeORMWatcher from "./watchers/TypeORMWatcher";
 
 export type Watcher =
     typeof RequestWatcher |
     typeof ErrorWatcher |
     typeof ClientRequestWatcher |
     typeof DumpWatcher |
-    typeof LogWatcher
+    typeof LogWatcher |
+    typeof TypeORMWatcher
 
 export interface TelescopeOptions
 {
