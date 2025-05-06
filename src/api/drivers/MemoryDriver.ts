@@ -3,7 +3,7 @@ import WatcherEntry, {WatcherEntryCollectionType, WatcherType} from "../WatcherE
 
 export default class MemoryDriver implements DatabaseDriver
 {
-    private db: WatcherData
+    private db: WatcherData;
 
     constructor()
     {
@@ -12,6 +12,7 @@ export default class MemoryDriver implements DatabaseDriver
             exceptions: [],
             dumps: [],
             logs: [],
+            queries: [],
             "client-requests": [],
         }
     }
@@ -56,6 +57,7 @@ export default class MemoryDriver implements DatabaseDriver
             exceptions: [],
             dumps: [],
             logs: [],
+            queries: [],
             "client-requests": [],
         }
     }

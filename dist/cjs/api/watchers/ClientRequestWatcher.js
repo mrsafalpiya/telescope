@@ -22,15 +22,6 @@ var __importStar = (this && this.__importStar) || function (mod) {
     __setModuleDefault(result, mod);
     return result;
 };
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
@@ -58,37 +49,34 @@ class ClientRequestWatcher {
             request = config;
             return config;
         });
-        axios_1.default.interceptors.response.use((response) => __awaiter(this, void 0, void 0, function* () {
+        axios_1.default.interceptors.response.use(async (response) => {
             if (request) {
                 const watcher = new ClientRequestWatcher(request, response, telescope.batchId);
-                !watcher.shouldIgnore() && (yield watcher.save());
+                !watcher.shouldIgnore() && await watcher.save();
                 request = null;
             }
             return response;
-        }), (error) => __awaiter(this, void 0, void 0, function* () {
+        }, async (error) => {
             if (request) {
                 const watcher = new ClientRequestWatcher(request, error.response, telescope.batchId);
-                !watcher.shouldIgnore() && (yield watcher.save());
+                !watcher.shouldIgnore() && await watcher.save();
                 request = null;
             }
             return Promise.reject(error);
-        }));
-    }
-    save() {
-        var _a, _b, _c, _d, _e;
-        return __awaiter(this, void 0, void 0, function* () {
-            const entry = new ClientRequestWatcherEntry({
-                hostname: (0, os_1.hostname)(),
-                method: (_b = (_a = this.request.method) === null || _a === void 0 ? void 0 : _a.toUpperCase()) !== null && _b !== void 0 ? _b : '',
-                uri: (_c = this.request.url) !== null && _c !== void 0 ? _c : '',
-                headers: (_d = this.request.headers) !== null && _d !== void 0 ? _d : {},
-                payload: (_e = this.request.data) !== null && _e !== void 0 ? _e : {},
-                response_status: this.response.status,
-                response_headers: this.response.headers,
-                response: this.isHtmlResponse() ? this.escapeHTML(this.response.data) : this.response.data
-            }, this.batchId);
-            yield DB_js_1.default.clientRequests().save(entry);
         });
+    }
+    async save() {
+        const entry = new ClientRequestWatcherEntry({
+            hostname: (0, os_1.hostname)(),
+            method: this.request.method?.toUpperCase() ?? '',
+            uri: this.request.url ?? '',
+            headers: this.request.headers ?? {},
+            payload: this.request.data ?? {},
+            response_status: this.response.status,
+            response_headers: this.response.headers,
+            response: this.isHtmlResponse() ? this.escapeHTML(this.response.data) : this.response.data
+        }, this.batchId);
+        await DB_js_1.default.clientRequests().save(entry);
     }
     escapeHTML(html) {
         return html.replace(/[&<>'"]/g, tag => ({
@@ -100,13 +88,11 @@ class ClientRequestWatcher {
         }[tag] || tag));
     }
     isHtmlResponse() {
-        var _a, _b, _c, _d;
-        return (_d = (_c = ((_b = (_a = this.response) === null || _a === void 0 ? void 0 : _a.headers) !== null && _b !== void 0 ? _b : [])['content-type']) === null || _c === void 0 ? void 0 : _c.startsWith('text/html')) !== null && _d !== void 0 ? _d : false;
+        return (this.response?.headers ?? [])['content-type']?.startsWith('text/html') ?? false;
     }
     shouldIgnore() {
         const checks = ClientRequestWatcher.ignoreUrls.map((url) => {
-            var _a;
-            return url.endsWith('*') ? (_a = this.request.url) === null || _a === void 0 ? void 0 : _a.startsWith(url.slice(0, -1)) : this.request.url === url;
+            return url.endsWith('*') ? this.request.url?.startsWith(url.slice(0, -1)) : this.request.url === url;
         });
         return checks.includes(true);
     }

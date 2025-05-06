@@ -8,6 +8,7 @@ var WatcherEntryDataType;
     WatcherEntryDataType["exceptions"] = "exception";
     WatcherEntryDataType["dumps"] = "dump";
     WatcherEntryDataType["logs"] = "log";
+    WatcherEntryDataType["queries"] = "query";
     WatcherEntryDataType["clientRequests"] = "client-request";
 })(WatcherEntryDataType = exports.WatcherEntryDataType || (exports.WatcherEntryDataType = {}));
 var WatcherEntryCollectionType;
@@ -16,6 +17,7 @@ var WatcherEntryCollectionType;
     WatcherEntryCollectionType["exception"] = "exceptions";
     WatcherEntryCollectionType["dump"] = "dumps";
     WatcherEntryCollectionType["log"] = "logs";
+    WatcherEntryCollectionType["query"] = "queries";
     WatcherEntryCollectionType["clientRequest"] = "client-requests";
 })(WatcherEntryCollectionType = exports.WatcherEntryCollectionType || (exports.WatcherEntryCollectionType = {}));
 class WatcherEntry {

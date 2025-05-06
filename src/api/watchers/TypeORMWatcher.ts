@@ -16,7 +16,7 @@ export enum LogType {
 
 export interface TypeORMWatcherData
 {
-    type: string,
+    type: LogType,
     prefix: string,
     query: string
 }
@@ -41,6 +41,9 @@ export default class TypeORMWatcher
         this.batchId = batchId
 
         this.data = {
+            type: level,
+            prefix: data[0],
+            query: data[1]
         }
     }
 
