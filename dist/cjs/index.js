@@ -26,7 +26,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.WatcherEntryCollectionType = exports.WatcherEntryDataType = exports.WatcherEntry = exports.DB = exports.TypeORMWatcherEntry = exports.TypeORMWatcher = exports.LogWatcherEntry = exports.LogWatcher = exports.DumpWatcherEntry = exports.DumpWatcher = exports.ErrorWatcherEntry = exports.ErrorWatcher = exports.ClientRequestWatcherEntry = exports.ClientRequestWatcher = exports.RequestWatcherEntry = exports.RequestWatcher = exports.MemoryDriver = exports.LowDriver = exports.JSONFileSyncAdapter = void 0;
+exports.WatcherEntryCollectionType = exports.WatcherEntryDataType = exports.WatcherEntry = exports.DB = exports.TypeORMLogger = exports.TypeORMWatcherEntry = exports.TypeORMWatcher = exports.LogWatcherEntry = exports.LogWatcher = exports.DumpWatcherEntry = exports.DumpWatcher = exports.ErrorWatcherEntry = exports.ErrorWatcher = exports.ClientRequestWatcherEntry = exports.ClientRequestWatcher = exports.RequestWatcherEntry = exports.RequestWatcher = exports.MemoryDriver = exports.LowDriver = exports.JSONFileSyncAdapter = void 0;
 const JSONFileSyncAdapter_js_1 = __importDefault(require("./api/drivers/JSONFileSyncAdapter.js"));
 exports.JSONFileSyncAdapter = JSONFileSyncAdapter_js_1.default;
 const LowDriver_js_1 = __importDefault(require("./api/drivers/LowDriver.js"));
@@ -58,4 +58,6 @@ Object.defineProperty(exports, "WatcherEntryDataType", { enumerable: true, get: 
 const TypeORMWatcher_js_1 = __importStar(require("./api/watchers/TypeORMWatcher.js"));
 exports.TypeORMWatcher = TypeORMWatcher_js_1.default;
 Object.defineProperty(exports, "TypeORMWatcherEntry", { enumerable: true, get: function () { return TypeORMWatcher_js_1.TypeORMWatcherEntry; } });
+const TypeORMLogger_js_1 = __importDefault(require("./api/loggers/TypeORMLogger.js"));
+exports.TypeORMLogger = TypeORMLogger_js_1.default;
 exports.default = Telescope_js_1.default;

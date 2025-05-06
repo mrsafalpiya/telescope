@@ -20,13 +20,14 @@ export class TypeORMWatcherEntry extends WatcherEntry {
 export default class TypeORMWatcher {
     constructor(data, level, batchId) {
         this.batchId = batchId;
-        this.data = {
-            type: level,
-            prefix: data[0],
-            query: data[1]
-        };
+        this.data = { level, data };
     }
     static capture(telescope) {
+        // @ts-ignore
+        console['query'] = function (type, query, parameters, ...args) {
+            const watcher = new TypeORMWatcher({ query, parameters, args }, type, telescope.batchId);
+            watcher.save();
+        };
     }
     save() {
         const entry = new TypeORMWatcherEntry(this.data, this.batchId);

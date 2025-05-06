@@ -12,9 +12,8 @@ export declare enum LogType {
     QUERY_ERROR = "query-error"
 }
 export interface TypeORMWatcherData {
-    type: LogType;
-    prefix: string;
-    query: string;
+    level: LogType;
+    data: undefined;
 }
 export declare class TypeORMWatcherEntry extends WatcherEntry<TypeORMWatcherData> {
     constructor(data: TypeORMWatcherData, batchId?: string);
@@ -23,7 +22,7 @@ export default class TypeORMWatcher {
     static entryType: WatcherEntryCollectionType;
     private data;
     private batchId?;
-    constructor(data: any[], level: LogType, batchId?: string);
+    constructor(data: any, level: LogType, batchId?: string);
     static capture(telescope: Telescope): void;
     save(): void;
 }

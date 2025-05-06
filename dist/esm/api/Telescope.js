@@ -8,6 +8,7 @@ import ErrorWatcher from "./watchers/ErrorWatcher.js";
 import DumpWatcher from "./watchers/DumpWatcher.js";
 import { existsSync } from "fs";
 import path from "path";
+import TypeORMWatcher from "./watchers/TypeORMWatcher";
 export default class Telescope {
     constructor(app) {
         this.app = app;
@@ -30,6 +31,8 @@ export default class Telescope {
             && ClientRequestWatcher.capture(telescope);
         Telescope.enabledWatchers.includes(LogWatcher)
             && LogWatcher.capture(telescope);
+        Telescope.enabledWatchers.includes(TypeORMWatcher)
+            && TypeORMWatcher.capture(telescope);
         return telescope;
     }
     static config(options) {
