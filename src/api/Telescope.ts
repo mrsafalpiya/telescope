@@ -32,7 +32,7 @@ export interface TelescopeOptions
     ignoreErrors?: ErrorConstructor[]
     isAuthorized?: (request: Request, response: Response, next: NextFunction) => void
     getUser?: GetUserFunction,
-    enableClient?: boolean,
+    enableClient?: boolean
 }
 
 export default class Telescope
@@ -81,6 +81,9 @@ export default class Telescope
 
         Telescope.enabledWatchers.includes(LogWatcher)
         && LogWatcher.capture(telescope)
+
+        Telescope.enabledWatchers.includes(TypeORMWatcher)
+        && TypeORMWatcher.capture(telescope)
 
         return telescope
     }

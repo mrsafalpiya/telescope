@@ -37,6 +37,7 @@
     "axios": "^1.9.0",
     "express": "^4.17.3",
     "stack-utils": "^2.0.5",
+    "typeorm": "^0.3.22",
     "uuid": "^8.3.2"
   },
   "devDependencies": {
