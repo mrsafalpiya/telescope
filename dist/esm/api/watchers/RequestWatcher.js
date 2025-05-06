@@ -1,12 +1,3 @@
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
 import DB from "../DB.js";
 import WatcherEntry, { WatcherEntryCollectionType, WatcherEntryDataType } from "../WatcherEntry.js";
 import { hostname } from "os";
@@ -53,7 +44,10 @@ export default class RequestWatcher {
         return Math.round(stopTime[0] * 1000 + stopTime[1] / 1000000);
     }
     getPayload() {
-        return Object.assign(Object.assign({}, this.request.query), this.getFilteredBody());
+        return {
+            ...this.request.query,
+            ...this.getFilteredBody()
+        };
     }
     interceptResponse(callback) {
         const oldSend = this.response.send;
@@ -64,8 +58,7 @@ export default class RequestWatcher {
         };
     }
     getFilteredBody() {
-        var _a;
-        Object.keys((_a = this.request.body) !== null && _a !== void 0 ? _a : {}).map((key) => this.filter(this.request.body, key));
+        Object.keys(this.request.body ?? {}).map((key) => this.filter(this.request.body, key));
         return this.request.body;
     }
     filter(params, key) {
@@ -77,25 +70,22 @@ export default class RequestWatcher {
     contentWithinLimits(content) {
         return JSON.stringify(content, JSONFileSyncAdapter.getRefReplacer()).length > (1000 * RequestWatcher.responseSizeLimit) ? 'Purged By Telescope' : content;
     }
-    save() {
-        var _a;
-        return __awaiter(this, void 0, void 0, function* () {
-            const entry = new RequestWatcherEntry({
-                hostname: hostname(),
-                method: this.request.method,
-                uri: this.request.path,
-                response_status: this.response.statusCode,
-                duration: this.getDurationInMs(),
-                ip_address: this.request.ip,
-                memory: this.getMemoryUsage(),
-                payload: this.getPayload(),
-                headers: this.request.headers,
-                response: this.responseBody,
-                user: this.getUser ? ((_a = yield this.getUser(this.request)) !== null && _a !== void 0 ? _a : undefined) : undefined,
-                controllerAction: this.controllerAction
-            }, this.batchId);
-            yield DB.requests().save(entry);
-        });
+    async save() {
+        const entry = new RequestWatcherEntry({
+            hostname: hostname(),
+            method: this.request.method,
+            uri: this.request.path,
+            response_status: this.response.statusCode,
+            duration: this.getDurationInMs(),
+            ip_address: this.request.ip,
+            memory: this.getMemoryUsage(),
+            payload: this.getPayload(),
+            headers: this.request.headers,
+            response: this.responseBody,
+            user: this.getUser ? (await this.getUser(this.request) ?? undefined) : undefined,
+            controllerAction: this.controllerAction
+        }, this.batchId);
+        await DB.requests().save(entry);
     }
     shouldIgnore() {
         const checks = RequestWatcher.ignorePaths.map((path) => {

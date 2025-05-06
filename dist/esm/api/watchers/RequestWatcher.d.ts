@@ -10,7 +10,7 @@ export declare enum HTTPMethod {
     PATCH = "PATCH",
     DELETE = "DELETE"
 }
-export declare type GetUserFunction = (request: any) => User | Promise<User>;
+export type GetUserFunction = (request: any) => User | Promise<User>;
 export interface User {
     id: string | number;
     name?: string;

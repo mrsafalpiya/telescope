@@ -1,12 +1,3 @@
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
 import express from 'express';
 import DB from './DB.js';
 import ClientRequestWatcher from "./watchers/ClientRequestWatcher.js";
@@ -22,15 +13,17 @@ export default class Telescope {
         this.app = app;
     }
     static setup(app, options) {
-        Telescope.config(options !== null && options !== void 0 ? options : {});
+        Telescope.config(options ?? {});
         const telescope = new Telescope(app);
-        app.use('/telescope', Telescope.isAuthorized);
-        telescope.setUpApi();
-        telescope.setUpStaticFiles();
+        if (Telescope.enableClient) {
+            app.use('/telescope', Telescope.isAuthorized);
+            telescope.setUpApi();
+            telescope.setUpStaticFiles();
+        }
         app.use((request, response, next) => {
             telescope.batchId = uuidv4();
             Telescope.enabledWatchers.includes(RequestWatcher)
-                && RequestWatcher.capture(request, response, telescope.batchId, options === null || options === void 0 ? void 0 : options.getUser);
+                && RequestWatcher.capture(request, response, telescope.batchId, options?.getUser);
             next();
         });
         Telescope.enabledWatchers.includes(ClientRequestWatcher)
@@ -42,6 +35,9 @@ export default class Telescope {
     static config(options) {
         if (options.enabledWatchers) {
             Telescope.enabledWatchers = options.enabledWatchers;
+        }
+        if (options.enableClient) {
+            Telescope.enableClient = options.enableClient;
         }
         if (options.isAuthorized) {
             Telescope.isAuthorized = options.isAuthorized;
@@ -76,31 +72,29 @@ export default class Telescope {
         return Telescope.enabledWatchers.map((watcher) => watcher.entryType);
     }
     setUpApi() {
-        this.app.post('/telescope/telescope-api/:entry', (request, response) => __awaiter(this, void 0, void 0, function* () {
-            var _a;
-            const entries = yield DB.entry(request.params.entry).get(Number((_a = request.query.take) !== null && _a !== void 0 ? _a : 50));
+        this.app.post('/telescope/telescope-api/:entry', async (request, response) => {
+            const entries = await DB.entry(request.params.entry).get(Number(request.query.take ?? 50));
             response.json({
                 entries,
                 status: "enabled"
             });
-        }));
-        this.app.get('/telescope/telescope-api/:entry/:id', (request, response) => __awaiter(this, void 0, void 0, function* () {
-            var _b;
-            const entry = yield DB.entry(request.params.entry).find(request.params.id);
+        });
+        this.app.get('/telescope/telescope-api/:entry/:id', async (request, response) => {
+            const entry = await DB.entry(request.params.entry).find(request.params.id);
             response.json({
                 entry,
-                batch: yield DB.batch((_b = entry === null || entry === void 0 ? void 0 : entry.batchId) !== null && _b !== void 0 ? _b : '')
+                batch: await DB.batch(entry?.batchId ?? '')
             });
-        }));
-        this.app.delete("/telescope/telescope-api/entries", (request, response) => __awaiter(this, void 0, void 0, function* () {
-            yield DB.truncate();
+        });
+        this.app.delete("/telescope/telescope-api/entries", async (request, response) => {
+            await DB.truncate();
             response.send("OK");
-        }));
-        this.app.get("/telescope/telescope-api/entries", (request, response) => __awaiter(this, void 0, void 0, function* () {
+        });
+        this.app.get("/telescope/telescope-api/entries", async (request, response) => {
             response.json({
                 enabled: Telescope.getEnabledWatchers()
             });
-        }));
+        });
     }
     resolveDir() {
         let dir = process.cwd() + '/node_modules/@damianchojnacki/telescope/dist/';
@@ -129,3 +123,4 @@ Telescope.enabledWatchers = [
     DumpWatcher,
     LogWatcher
 ];
+Telescope.enableClient = true;

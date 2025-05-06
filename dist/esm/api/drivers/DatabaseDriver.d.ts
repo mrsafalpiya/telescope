@@ -4,11 +4,13 @@ import { ErrorWatcherData } from "../watchers/ErrorWatcher.js";
 import { DumpWatcherData } from "../watchers/DumpWatcher.js";
 import { LogWatcherData } from "../watchers/LogWatcher.js";
 import { ClientRequestWatcherData } from "../watchers/ClientRequestWatcher.js";
+import { TypeORMWatcherData } from "../watchers/TypeORMWatcher";
 export interface WatcherData {
     requests: WatcherEntry<RequestWatcherData>[];
     exceptions: WatcherEntry<ErrorWatcherData>[];
     dumps: WatcherEntry<DumpWatcherData>[];
     logs: WatcherEntry<LogWatcherData>[];
+    queries: WatcherEntry<TypeORMWatcherData>[];
     "client-requests": WatcherEntry<ClientRequestWatcherData>[];
 }
 export default interface DatabaseDriver {

@@ -5,6 +5,7 @@ export var WatcherEntryDataType;
     WatcherEntryDataType["exceptions"] = "exception";
     WatcherEntryDataType["dumps"] = "dump";
     WatcherEntryDataType["logs"] = "log";
+    WatcherEntryDataType["queries"] = "query";
     WatcherEntryDataType["clientRequests"] = "client-request";
 })(WatcherEntryDataType || (WatcherEntryDataType = {}));
 export var WatcherEntryCollectionType;
@@ -13,6 +14,7 @@ export var WatcherEntryCollectionType;
     WatcherEntryCollectionType["exception"] = "exceptions";
     WatcherEntryCollectionType["dump"] = "dumps";
     WatcherEntryCollectionType["log"] = "logs";
+    WatcherEntryCollectionType["query"] = "queries";
     WatcherEntryCollectionType["clientRequest"] = "client-requests";
 })(WatcherEntryCollectionType || (WatcherEntryCollectionType = {}));
 export default class WatcherEntry {

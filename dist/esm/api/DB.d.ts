@@ -1,12 +1,12 @@
 import DatabaseDriver from "./drivers/DatabaseDriver.js";
 import WatcherEntry, { WatcherEntryCollectionType, WatcherType } from "./WatcherEntry.js";
-export declare type Driver = new () => DatabaseDriver;
+export type Driver = new () => DatabaseDriver;
 declare class DB {
     static driver: Driver;
     private static db;
     private constructor();
     static entry<T extends WatcherType, U extends WatcherEntry<T>>(name: WatcherEntryCollectionType): {
-        get: (take?: number | undefined) => Promise<WatcherEntry<WatcherType>[]>;
+        get: (take?: number) => Promise<WatcherEntry<WatcherType>[]>;
         find: (id: string) => Promise<WatcherEntry<WatcherType> | undefined>;
         save: (data: WatcherEntry<T>) => Promise<void>;
         update: (index: number, toUpdate: WatcherEntry<T>) => Promise<void>;

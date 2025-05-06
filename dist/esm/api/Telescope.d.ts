@@ -5,7 +5,7 @@ import LogWatcher from "./watchers/LogWatcher.js";
 import RequestWatcher, { GetUserFunction } from "./watchers/RequestWatcher.js";
 import ErrorWatcher from "./watchers/ErrorWatcher.js";
 import DumpWatcher from "./watchers/DumpWatcher.js";
-export declare type Watcher = typeof RequestWatcher | typeof ErrorWatcher | typeof ClientRequestWatcher | typeof DumpWatcher | typeof LogWatcher;
+export type Watcher = typeof RequestWatcher | typeof ErrorWatcher | typeof ClientRequestWatcher | typeof DumpWatcher | typeof LogWatcher;
 export interface TelescopeOptions {
     enabledWatchers?: Watcher[];
     databaseDriver?: Driver;
@@ -16,11 +16,13 @@ export interface TelescopeOptions {
     ignoreErrors?: ErrorConstructor[];
     isAuthorized?: (request: Request, response: Response, next: NextFunction) => void;
     getUser?: GetUserFunction;
+    enableClient?: boolean;
 }
 export default class Telescope {
     private static enabledWatchers;
     app: Express;
     batchId?: string;
+    private static enableClient;
     constructor(app: Express);
     static setup(app: Express, options?: TelescopeOptions): Telescope;
     static config(options: TelescopeOptions): void;

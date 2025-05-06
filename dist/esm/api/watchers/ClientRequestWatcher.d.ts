@@ -5,10 +5,10 @@ export interface ClientRequestWatcherData {
     hostname: string;
     method: Method | string;
     uri: string;
-    headers: AxiosRequestHeaders;
+    headers: Partial<AxiosRequestHeaders> | Object;
     payload: object;
     response_status: number;
-    response_headers: AxiosResponseHeaders;
+    response_headers: Partial<AxiosResponseHeaders> | Object;
     response: any;
 }
 export declare class ClientRequestWatcherEntry extends WatcherEntry<ClientRequestWatcherData> {
