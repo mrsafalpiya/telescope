@@ -3,7 +3,7 @@
     <img src="https://img.shields.io/badge/express-%3E%3D%204.0.0-blue" alt="Express version >= 4.0.0"/>
     <img src="https://img.shields.io/badge/license-MIT-brightgreen" alt="License MIT"/>
     <img src="https://img.shields.io/npm/dm/@asule/telescope" alt="Downloads"/>
-    <img src="https://img.shields.io/github/workflow/status/asule/telescope/Node.js%20CI" alt="Build"/>
+    <img src="https://img.shields.io/github/actions/workflow/status/ASU-LE/telescope/node.js.yml" alt="Build">
 </p>
 
 ## THIS IS A FORK!
@@ -30,14 +30,14 @@ wonderful companion to your local development environment.
 ### 1. Installation
 
 ```npm
-npm i @asule/telescope
+npm i @asule/node-telescope
 ```
 
 ### 2. Usage
 Setup Telescope BEFORE any route. Set up ErrorWatcher if needed at the end.
 
 ```javascript
-import Telescope, { ErrorWatcher } from '@asule/telescope'
+import Telescope, { ErrorWatcher } from '@asule/node-telescope'
 
 const app = express()
 
@@ -81,7 +81,7 @@ Logs unhandled errors.
 Saves dump messages.
 
 ```javascript
-import { dump } from "@asule/telescope"
+import { dump } from "@asule/node-telescope"
 
 dump("foo")
 ```
@@ -189,7 +189,7 @@ const dataSourceConfig: any = {
 ### Database drivers
 Customizing database driver:
 ```javascript
-import { MemoryDriver } from "@asule/telescope"
+import { MemoryDriver } from "@asule/node-telescope"
 
 const telescope = Telescope.setup(app, {
     databaseDriver: MemoryDriver
