@@ -158,7 +158,26 @@ If paramsToFilter matches request param it will be converted to *******.
 
 `getUser` - telescope will display provided user on the request preview page, id is required, name and email are optional
 
-#### Database drivers
+### TypeORM Logging
+
+TypeORM logging is a bit more setup than other logging. You must add the `TypeORMWatcher` to the list of enabled watchers,
+and then you must pass the `logger` option to the TypeORM connection options. This is an example of how it would look in
+NestJS:
+
+```javascript
+const dataSourceConfig: any = {
+    type: 'mysql',
+    host: configService.get('DB_HOST'),
+    port: configService.get('DB_PORT'),
+    username: configService.get('DB_USER'),
+    password: configService.get('DB_PASSWORD'),
+    database: configService.get('DB_DATABASE'),
+    logger: new TypeORMLogger(), // This line must be added to log the Queries
+};
+```
+
+
+### Database drivers
 Customizing database driver:
 ```javascript
 import { MemoryDriver } from "@damianchojnacki/telescope"
