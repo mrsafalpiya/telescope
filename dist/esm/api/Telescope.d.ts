@@ -5,7 +5,8 @@ import LogWatcher from "./watchers/LogWatcher.js";
 import RequestWatcher, { GetUserFunction } from "./watchers/RequestWatcher.js";
 import ErrorWatcher from "./watchers/ErrorWatcher.js";
 import DumpWatcher from "./watchers/DumpWatcher.js";
-export type Watcher = typeof RequestWatcher | typeof ErrorWatcher | typeof ClientRequestWatcher | typeof DumpWatcher | typeof LogWatcher;
+import TypeORMWatcher from "./watchers/TypeORMWatcher";
+export type Watcher = typeof RequestWatcher | typeof ErrorWatcher | typeof ClientRequestWatcher | typeof DumpWatcher | typeof LogWatcher | typeof TypeORMWatcher;
 export interface TelescopeOptions {
     enabledWatchers?: Watcher[];
     databaseDriver?: Driver;
