@@ -56,16 +56,16 @@ class TypeORMWatcher {
     }
     static capture(telescope) {
         console.log('capture called');
-        Telescope_js_1.eventEmitter.on('query', (type, query, parameters, ...args) => {
+        Telescope_js_1.eventEmitter.on('query', async (type, query, parameters, ...args) => {
             console.log('event caught');
             const watcher = new TypeORMWatcher({ query, parameters, args }, type, telescope.batchId);
-            watcher.save();
+            await watcher.save();
         });
     }
-    save() {
+    async save() {
         console.log('save called');
         const entry = new TypeORMWatcherEntry(this.data, this.batchId);
-        DB_js_1.default.logs().save(entry);
+        await DB_js_1.default.logs().save(entry);
     }
 }
 exports.default = TypeORMWatcher;

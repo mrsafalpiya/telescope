@@ -26,16 +26,16 @@ export default class TypeORMWatcher {
     }
     static capture(telescope) {
         console.log('capture called');
-        eventEmitter.on('query', (type, query, parameters, ...args) => {
+        eventEmitter.on('query', async (type, query, parameters, ...args) => {
             console.log('event caught');
             const watcher = new TypeORMWatcher({ query, parameters, args }, type, telescope.batchId);
-            watcher.save();
+            await watcher.save();
         });
     }
-    save() {
+    async save() {
         console.log('save called');
         const entry = new TypeORMWatcherEntry(this.data, this.batchId);
-        DB.logs().save(entry);
+        await DB.logs().save(entry);
     }
 }
 TypeORMWatcher.entryType = WatcherEntryCollectionType.log;

@@ -2,9 +2,9 @@ import { AbstractLogger } from "typeorm";
 import { LogType } from "../watchers/TypeORMWatcher";
 import { eventEmitter } from "../Telescope";
 export default class TypeORMLogger extends AbstractLogger {
-    constructor() {
+    constructor(options = true) {
         console.log('TypeORMLogger');
-        super();
+        super(options);
         this.eventEmitter = eventEmitter;
     }
     logQuery(query, parameters, queryRunner) {

@@ -2,15 +2,16 @@ import {AbstractLogger, LogLevel, LogMessage, QueryRunner} from "typeorm"
 import {LogType} from "../watchers/TypeORMWatcher";
 import {eventEmitter} from "../Telescope";
 import EventEmitter from "node:events";
+import {LoggerOptions} from "typeorm/logger/LoggerOptions";
 
 
 export default class TypeORMLogger extends AbstractLogger {
 
     private eventEmitter: EventEmitter;
 
-    constructor() {
+    constructor(options: LoggerOptions | undefined = true) {
         console.log('TypeORMLogger');
-        super();
+        super(options);
         this.eventEmitter = eventEmitter
     }
 

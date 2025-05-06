@@ -24,5 +24,5 @@ export default class TypeORMWatcher {
     private batchId?;
     constructor(data: any, level: LogType, batchId?: string);
     static capture(telescope: Telescope): void;
-    save(): void;
+    save(): Promise<void>;
 }
