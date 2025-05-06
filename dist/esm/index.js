@@ -9,5 +9,6 @@ import LogWatcher, { LogWatcherEntry } from './api/watchers/LogWatcher.js';
 import DB from './api/DB.js';
 import Telescope from './api/Telescope.js';
 import WatcherEntry, { WatcherEntryCollectionType, WatcherEntryDataType } from './api/WatcherEntry.js';
+import TypeORMWatcher, { TypeORMWatcherEntry } from './api/watchers/TypeORMWatcher.js';
 export default Telescope;
-export { JSONFileSyncAdapter, LowDriver, MemoryDriver, RequestWatcher, RequestWatcherEntry, ClientRequestWatcher, ClientRequestWatcherEntry, ErrorWatcher, ErrorWatcherEntry, DumpWatcher, DumpWatcherEntry, LogWatcher, LogWatcherEntry, DB, WatcherEntry, WatcherEntryDataType, WatcherEntryCollectionType };
+export { JSONFileSyncAdapter, LowDriver, MemoryDriver, RequestWatcher, RequestWatcherEntry, ClientRequestWatcher, ClientRequestWatcherEntry, ErrorWatcher, ErrorWatcherEntry, DumpWatcher, DumpWatcherEntry, LogWatcher, LogWatcherEntry, TypeORMWatcher, TypeORMWatcherEntry, DB, WatcherEntry, WatcherEntryDataType, WatcherEntryCollectionType };

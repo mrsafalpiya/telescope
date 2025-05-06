@@ -12,6 +12,7 @@ import LogWatcher, {LogWatcherData, LogWatcherEntry} from './api/watchers/LogWat
 import DB, {Driver} from './api/DB.js'
 import Telescope, {TelescopeOptions, Watcher} from './api/Telescope.js'
 import WatcherEntry, {WatcherEntryCollectionType, WatcherEntryDataType, WatcherType} from './api/WatcherEntry.js'
+import TypeORMWatcher, { TypeORMWatcherEntry, TypeORMWatcherData } from './api/watchers/TypeORMWatcher.js'
 
 export default Telescope
 
@@ -36,6 +37,9 @@ export {
     LogWatcher,
     LogWatcherEntry,
     LogWatcherData,
+    TypeORMWatcher,
+    TypeORMWatcherEntry,
+    TypeORMWatcherData,
     DB,
     Driver,
     TelescopeOptions,
