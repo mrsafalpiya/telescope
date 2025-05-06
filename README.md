@@ -172,7 +172,7 @@ const dataSourceConfig: any = {
     username: configService.get('DB_USER'),
     password: configService.get('DB_PASSWORD'),
     database: configService.get('DB_DATABASE'),
-    logger: new TypeORMLogger(), // This line must be added to log the Queries
+    logger: new TypeORMLogger(), // This line must be added to log the queries
 };
 ```
 
