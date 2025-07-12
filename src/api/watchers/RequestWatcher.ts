@@ -119,9 +119,9 @@ export default class RequestWatcher
         {
             const parsedContent = this.response.get('Content-Type')?.includes('application/json') ? JSON.parse(content) : content;
 
-            const sent = oldSend.call(this.response, parsedContent)
+            const sent = oldSend.call(this.response, content)
 
-            callback(this.contentWithinLimits(content))
+            callback(this.contentWithinLimits(parsedContent))
 
             return sent
         }

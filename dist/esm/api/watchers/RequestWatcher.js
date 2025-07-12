@@ -53,8 +53,8 @@ export default class RequestWatcher {
         const oldSend = this.response.send;
         this.response.send = (content) => {
             const parsedContent = this.response.get('Content-Type')?.includes('application/json') ? JSON.parse(content) : content;
-            const sent = oldSend.call(this.response, parsedContent);
-            callback(this.contentWithinLimits(content));
+            const sent = oldSend.call(this.response, content);
+            callback(this.contentWithinLimits(parsedContent));
             return sent;
         };
     }
