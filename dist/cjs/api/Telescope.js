@@ -19,6 +19,16 @@ const node_events_1 = __importDefault(require("node:events"));
 const telescopeEmitter = new node_events_1.default();
 exports.eventEmitter = telescopeEmitter;
 class Telescope {
+    static enabledWatchers = [
+        RequestWatcher_js_1.default,
+        ErrorWatcher_js_1.default,
+        ClientRequestWatcher_js_1.default,
+        DumpWatcher_js_1.default,
+        LogWatcher_js_1.default
+    ];
+    app;
+    batchId;
+    static enableClient = true;
     constructor(app) {
         this.app = app;
     }
@@ -129,11 +139,3 @@ class Telescope {
     }
 }
 exports.default = Telescope;
-Telescope.enabledWatchers = [
-    RequestWatcher_js_1.default,
-    ErrorWatcher_js_1.default,
-    ClientRequestWatcher_js_1.default,
-    DumpWatcher_js_1.default,
-    LogWatcher_js_1.default
-];
-Telescope.enableClient = true;

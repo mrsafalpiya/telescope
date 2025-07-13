@@ -13,6 +13,16 @@ import EventEmitter from 'node:events';
 const telescopeEmitter = new EventEmitter();
 export const eventEmitter = telescopeEmitter;
 export default class Telescope {
+    static enabledWatchers = [
+        RequestWatcher,
+        ErrorWatcher,
+        ClientRequestWatcher,
+        DumpWatcher,
+        LogWatcher
+    ];
+    app;
+    batchId;
+    static enableClient = true;
     constructor(app) {
         this.app = app;
     }
@@ -122,11 +132,3 @@ export default class Telescope {
         this.app.get('/telescope/', (request, response) => response.redirect('/telescope/requests'));
     }
 }
-Telescope.enabledWatchers = [
-    RequestWatcher,
-    ErrorWatcher,
-    ClientRequestWatcher,
-    DumpWatcher,
-    LogWatcher
-];
-Telescope.enableClient = true;
