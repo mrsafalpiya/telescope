@@ -1,13 +1,13 @@
 {
-  "name": "@asule/node-telescope",
-  "description": "An elegant debug assistant for Node.js (based on Laravel Telescope). - Forked from Damian Chojnacki <damianchojnacki@op.pl> (https://damianchojnacki.com)",
-  "author": "ASU LE",
+  "name": "@mrsafalpiya/node-telescope",
+  "description": "An elegant debug assistant for Node.js (based on Laravel Telescope). - Forked from ASU LE (https://github.com/ASU-LE/telescope)",
+  "author": "Safal Piya <mrsafalpiya@gmail.com>",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/ASU-LE/telescope"
+    "url": "https://github.com/mrsafalpiya/node-telescope"
   },
-  "version": "1.0.9",
+  "version": "1.0.0",
   "type": "module",
   "module": "./dist/esm/index.js",
   "main": "./dist/cjs/index.js",
