@@ -62,8 +62,9 @@ export default class RequestWatcher {
     interceptResponse(callback) {
         const oldSend = this.response.send;
         this.response.send = (content) => {
+            const parsedContent = this.response.get('Content-Type')?.includes('application/json') ? JSON.parse(content) : content;
             const sent = oldSend.call(this.response, content);
-            callback(this.contentWithinLimits(content));
+            callback(this.contentWithinLimits(parsedContent));
             return sent;
         };
     }
