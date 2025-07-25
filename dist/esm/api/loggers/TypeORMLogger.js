@@ -1,6 +1,6 @@
 import { AbstractLogger } from "typeorm";
-import { LogType } from "../watchers/TypeORMWatcher";
-import { eventEmitter } from "../Telescope";
+import { LogType } from "../watchers/TypeORMWatcher.js";
+import { eventEmitter } from "../Telescope.js";
 export default class TypeORMLogger extends AbstractLogger {
     eventEmitter;
     telescopeTable;

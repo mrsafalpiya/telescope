@@ -8,7 +8,7 @@ import ErrorWatcher from "./watchers/ErrorWatcher.js";
 import DumpWatcher from "./watchers/DumpWatcher.js";
 import { existsSync } from "fs";
 import path from "path";
-import TypeORMWatcher from "./watchers/TypeORMWatcher";
+import TypeORMWatcher from "./watchers/TypeORMWatcher.js";
 import EventEmitter from 'node:events';
 const telescopeEmitter = new EventEmitter();
 export const eventEmitter = telescopeEmitter;

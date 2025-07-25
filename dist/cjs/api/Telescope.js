@@ -14,7 +14,7 @@ const ErrorWatcher_js_1 = __importDefault(require("./watchers/ErrorWatcher.js"))
 const DumpWatcher_js_1 = __importDefault(require("./watchers/DumpWatcher.js"));
 const fs_1 = require("fs");
 const path_1 = __importDefault(require("path"));
-const TypeORMWatcher_1 = __importDefault(require("./watchers/TypeORMWatcher"));
+const TypeORMWatcher_js_1 = __importDefault(require("./watchers/TypeORMWatcher.js"));
 const node_events_1 = __importDefault(require("node:events"));
 const telescopeEmitter = new node_events_1.default();
 exports.eventEmitter = telescopeEmitter;
@@ -50,8 +50,8 @@ class Telescope {
             && ClientRequestWatcher_js_1.default.capture(telescope);
         Telescope.enabledWatchers.includes(LogWatcher_js_1.default)
             && LogWatcher_js_1.default.capture(telescope);
-        Telescope.enabledWatchers.includes(TypeORMWatcher_1.default)
-            && TypeORMWatcher_1.default.capture(telescope);
+        Telescope.enabledWatchers.includes(TypeORMWatcher_js_1.default)
+            && TypeORMWatcher_js_1.default.capture(telescope);
         return telescope;
     }
     static config(options) {

@@ -11,7 +11,7 @@ import {existsSync} from "fs"
 import {fileURLToPath, resolve} from "url"
 import * as url from "url"
 import path from "path"
-import TypeORMWatcher from "./watchers/TypeORMWatcher";
+import TypeORMWatcher from "./watchers/TypeORMWatcher.js";
 import EventEmitter from 'node:events';
 
 export type Watcher =
